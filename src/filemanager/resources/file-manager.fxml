@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="fileManagerWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#backspacePressed" prefHeight="477.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filemanager.controllers.FileManagerController">
+   <top>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="createFileButton" mnemonicParsing="false" onMouseClicked="#createFile" prefHeight="45.0" prefWidth="94.0" text="Create file">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="createFolderButton" mnemonicParsing="false" onMouseClicked="#createFolder" prefHeight="47.0" prefWidth="85.0" text="Create folder">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deletePath" prefHeight="60.0" prefWidth="51.0" text="Delete">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="editNameButton" mnemonicParsing="false" onMouseClicked="#editName" prefHeight="25.0" prefWidth="77.0" text="Edit name">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
+            <TextField fx:id="findTextField" minHeight="-Infinity" onKeyPressed="#findPressedOrTyped" onKeyTyped="#findPressedOrTyped" prefHeight="25.0" prefWidth="380.0" promptText="Find a file or a folder at this location">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="findButton" mnemonicParsing="false" onMouseClicked="#findClicked" text="Find">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <bottom>
+      <ListView fx:id="pathsFoundList" onKeyPressed="#listViewKeyBoardFunctions" onMouseClicked="#listItemSelected" prefHeight="377.0" prefWidth="780.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin></ListView>
+   </bottom>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#moveBackButton" text="&lt;-">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label style="-fx-font-weight: bold;" text="Address:">
+               <HBox.margin>
+                  <Insets left="15.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="pathAddress" onKeyPressed="#addressFieldKeyPressed" prefHeight="30.0" prefWidth="622.0" text="C:\" />
+            <Button fx:id="goButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onKeyPressed="#goButtonKeyPressed" onMouseClicked="#goButtonClicked" text="Go">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </center>
+</BorderPane>
