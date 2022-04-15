@@ -22,17 +22,28 @@ import java.nio.file.Paths;
 
 public class FileManagerController {
 
-    @FXML private BorderPane fileManagerWindow;
-    @FXML private TextField pathAddress = new TextField();
-    @FXML private ListView<Path> pathsFoundList = new ListView<>();
-    @FXML private Button goButton;
-    @FXML private Button backButton;
-    @FXML private Button createFileButton;
-    @FXML private Button createFolderButton;
-    @FXML private Button editNameButton;
-    @FXML private Button deleteButton;
-    @FXML private Button findButton;
-    @FXML private TextField findTextField;
+    @FXML
+    private BorderPane fileManagerWindow;
+    @FXML
+    private TextField pathAddress = new TextField();
+    @FXML
+    private ListView<Path> pathsFoundList = new ListView<>();
+    @FXML
+    private Button goButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button createFileButton;
+    @FXML
+    private Button createFolderButton;
+    @FXML
+    private Button editNameButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button findButton;
+    @FXML
+    private TextField findTextField;
 
     //Paths to FXML resources
     private final String createFilePromptPath = "/filemanager/resources/create-file-prompt.fxml";
@@ -55,7 +66,7 @@ public class FileManagerController {
     }
 
 
-    public ListView<Path> getPathsFoundList(){
+    public ListView<Path> getPathsFoundList() {
         return pathsFoundList;
     }
 
@@ -65,32 +76,32 @@ public class FileManagerController {
 
     //Go to a new address (or open the file) when Go button is clicked by left mouse button
     public void goButtonClicked(MouseEvent mouseEvent) throws IOException {
-        if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY))
             setAddress();
 
     }
 
     //Go to a new address (or open the file) when Go button is pressed by Enter
     public void goButtonKeyPressed(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             setAddress();
     }
 
     //Go to a new address (or open the file) when address field is pressed by enter
     public void addressFieldKeyPressed(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             setAddress();
     }
 
     //Move to the parent address when back button is clicked by left mouse button
     public void moveBackButton(MouseEvent mouseEvent) throws IOException {
-        if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY))
             backAddress();
     }
 
     //Move to the parent address when escape button is pressed anywhere
     public void backspacePressed(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.BACK_SPACE)
+        if (keyEvent.getCode() == KeyCode.BACK_SPACE)
             backAddress();
 
     }
@@ -101,14 +112,14 @@ public class FileManagerController {
             Alerts.noDirectoryFoundAlert();
             pathAddress.setText(IOManager.getAddressPath().toString());
 
-        } else if (Files.isDirectory(IOManager.getAddressPath())){
+        } else if (Files.isDirectory(IOManager.getAddressPath())) {
             pathsFoundList.setItems(IOManager.getObservablePathList());
         }
     }
 
     //Cutting back address if possible
     private void backAddress() throws IOException {
-        if(!(IOManager.moveBackPath())) {
+        if (!(IOManager.moveBackPath())) {
             Alerts.cannotMoveBackAlert();
         }
         pathAddress.setText(IOManager.getAddressPath().toString());
@@ -122,7 +133,7 @@ public class FileManagerController {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             long diffClicksTime = 0;
             long currentTime = System.currentTimeMillis();
-            if(!(pathsFoundList.getSelectionModel().getSelectedItem() == null)) {
+            if (!(pathsFoundList.getSelectionModel().getSelectedItem() == null)) {
                 pathAddress.setText(IOManager.getAddressPath().toString() + "\\");
                 pathAddress.setText(pathAddress.getText() + pathsFoundList.getSelectionModel().getSelectedItem());
                 if (lastTimeClicked != 0 && currentTime != 0) {
@@ -141,15 +152,15 @@ public class FileManagerController {
     //UP_ARROW and DOWN_ARROW -> set selected item in ListView to the address field
     public void listViewKeyBoardFunctions(KeyEvent keyEvent) throws IOException {
         //Clear address field while ESCAPE pressed
-        if(keyEvent.getCode() == KeyCode.ESCAPE) {
+        if (keyEvent.getCode() == KeyCode.ESCAPE) {
             pathsFoundList.getSelectionModel().clearSelection();
             pathAddress.setText(IOManager.getAddressPath().toString());
         }
         //Go to a new address when ENTER pressed
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             setAddress();
         //Set selected address in address filed when UP_ARROW or DOWN ARROW pressed
-        if(keyEvent.getCode() == KeyCode.DOWN || keyEvent.getCode() == KeyCode.UP){
+        if (keyEvent.getCode() == KeyCode.DOWN || keyEvent.getCode() == KeyCode.UP) {
             pathAddress.setText(IOManager.getAddressPath().toString() + "\\");
             pathAddress.setText(pathAddress.getText() + pathsFoundList.getSelectionModel().getSelectedItem());
         }
@@ -170,7 +181,7 @@ public class FileManagerController {
     open a new window promp with editing form
     at the end set pathAddress field and pathsFound ListView*/
     public void editName(MouseEvent mouseEvent) throws IOException {
-        if(!pathsFoundList.getSelectionModel().isEmpty()) {
+        if (!pathsFoundList.getSelectionModel().isEmpty()) {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 IOManager.setPath(pathAddress.getText());
                 new UserInputPrompt(editNamePromptPath, "Edit name");
@@ -186,7 +197,7 @@ public class FileManagerController {
 
     //Creates a new folder and refreshes ListView
     public void createFolder(MouseEvent mouseEvent) throws IOException {
-        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             IOManager.setPath(pathAddress.getText());
             new UserInputPrompt(createFolderPromptPath, "Create a folder");
             UserInputPrompt.getStage().showAndWait();
@@ -200,19 +211,19 @@ public class FileManagerController {
     returned states: 1 - correctly deleted | 0 - not deleted | -1 - access denied
     at the end clear selection, set pathAddress field and pathsFound ListView */
     public void deletePath(MouseEvent mouseEvent) throws IOException {
-        if(!pathsFoundList.getSelectionModel().isEmpty()) {
-            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+        if (!pathsFoundList.getSelectionModel().isEmpty()) {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 Alerts.confirmToDeleteAlert();
-                if(Alerts.getAlert().getResult() == ButtonType.OK) {
+                if (Alerts.getAlert().getResult() == ButtonType.OK) {
                     Path deletedPath = Paths.get(pathAddress.getText());
                     int deletingResult = IOManager.deletePath(deletedPath.toString());
-                    if(deletingResult == 1){
+                    if (deletingResult == 1) {
                         Alerts.successfullyDeletedAlert(deletedPath.getFileName().toString());
-                    } else if(deletingResult == 0){
+                    } else if (deletingResult == 0) {
                         Alerts.cannotDeleteAlert();
-                    } else if(deletingResult == -1){
+                    } else if (deletingResult == -1) {
                         Alerts.accessDeniedAlert();
-                    } else if(deletingResult == -2){
+                    } else if (deletingResult == -2) {
                         Alerts.notEmptyDirAlert();
                     }
                 }
@@ -228,7 +239,7 @@ public class FileManagerController {
     }
 
     public void findClicked(MouseEvent mouseEvent) throws IOException {
-        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             pathsFoundList.setItems(IOManager.find(findTextField.getText()));
         }
 

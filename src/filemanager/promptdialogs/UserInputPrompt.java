@@ -21,10 +21,11 @@ public class UserInputPrompt {
         stage.setScene(new Scene(parent));
         stage.setTitle(stageTitle);
         stage.setResizable(false);
-        if(!(stage.getModality() == Modality.APPLICATION_MODAL))
+        if (!(stage.getModality() == Modality.APPLICATION_MODAL))
             stage.initModality(Modality.APPLICATION_MODAL);
     }
-    public static Stage getStage(){
+
+    public static Stage getStage() {
         return stage;
     }
 

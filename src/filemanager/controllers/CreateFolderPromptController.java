@@ -28,7 +28,7 @@ public class CreateFolderPromptController {
 
 
     public void createFolderByButton(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             createFolder();
     }
 
@@ -45,14 +45,14 @@ public class CreateFolderPromptController {
 
     //close prompt dialog when ESCAPE pressed anywhere
     public void closePromptDialog(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.ESCAPE)
+        if (keyEvent.getCode() == KeyCode.ESCAPE)
             UserInputPrompt.getStage().close();
     }
 
 
     private void createFolder() throws IOException {
         String folderName = folderNameField.getText();
-        if(!FileNameValidator.validate(folderName)){
+        if (!FileNameValidator.validate(folderName)) {
             Alerts.invalidNameAlert();
         } else {
             int creatingResult = IOManager.createNewFolder(folderName);

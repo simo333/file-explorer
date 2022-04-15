@@ -5,7 +5,10 @@ import filemanager.promptdialogs.UserInputPrompt;
 import filemanager.utility.Alerts;
 import filemanager.utility.FileNameValidator;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -15,7 +18,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class EditNamePromptController{
+public class EditNamePromptController {
     @FXML
     public Label oldNameText;
     @FXML
@@ -49,7 +52,7 @@ public class EditNamePromptController{
 
     //calls method editName() when enter is pressed
     public void editNameByButton(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             editName();
     }
 
@@ -70,14 +73,14 @@ public class EditNamePromptController{
 
     //close prompt dialog when ESCAPE pressed anywhere
     public void closePromptDialog(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ESCAPE) {
+        if (keyEvent.getCode() == KeyCode.ESCAPE) {
             IOManager.moveBackPath();
             UserInputPrompt.getStage().close();
         }
     }
 
 
-//    //renames filename or folder name
+    //    //renames filename or folder name
 //    //TODO DESCRIPTION
 //    private void editName() throws IOException {
 //        String newName = fileNameField.getText();
@@ -129,9 +132,9 @@ public class EditNamePromptController{
                 System.out.println("newName: " + newName + IOManager.getExtension());
                 Alerts.editedAlert(oldName.toString(), (newName + IOManager.getExtension(oldName)));
                 UserInputPrompt.getStage().close();
-            } else if(editingResult == 0) {
+            } else if (editingResult == 0) {
                 Alerts.sameNameExistsAlert();
-            } else if(editingResult == -1){
+            } else if (editingResult == -1) {
                 Alerts.accessDeniedAlert();
                 UserInputPrompt.getStage().close();
             }

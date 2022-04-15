@@ -7,7 +7,9 @@ import filemanager.utility.FileNameValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -15,7 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateFilePromptController {
     private Map<String, String> listOfTypes = new HashMap<>();
@@ -31,8 +35,7 @@ public class CreateFilePromptController {
     public VBox promptWindow;
 
 
-
-    public void initialize(){
+    public void initialize() {
         //initializing HashMap listOfTypes
         listOfTypes.put("Text file", ".txt");
         listOfTypes.put("Document file of MS Word", ".docx");
@@ -45,7 +48,7 @@ public class CreateFilePromptController {
 
     }
 
-    public ObservableList<String> getObservableKeyList(){
+    public ObservableList<String> getObservableKeyList() {
         return FXCollections.observableList(new ArrayList<>(listOfTypes.keySet()));
 
     }
@@ -58,7 +61,7 @@ public class CreateFilePromptController {
 
     //Go to createFile method when Enter pressed on a fileNameField or createButton
     public void createFileByButton(KeyEvent keyEvent) throws IOException {
-        if(keyEvent.getCode() == KeyCode.ENTER)
+        if (keyEvent.getCode() == KeyCode.ENTER)
             createFile();
     }
 
@@ -72,19 +75,19 @@ public class CreateFilePromptController {
     //close prompt dialog when a new file is created only
     private void createFile() throws IOException {
         String fileName = fileNameField.getText();
-        if(typeComboBox.getValue() == null) {
+        if (typeComboBox.getValue() == null) {
             Alerts.noTypeChosenAlert();
-        } else if(!FileNameValidator.validate(fileName)) {
+        } else if (!FileNameValidator.validate(fileName)) {
             Alerts.invalidNameAlert();
         } else {
             fileName = fileName + listOfTypes.get(typeComboBox.getValue());
-            int creatingResult =IOManager.createNewFile(fileName);
+            int creatingResult = IOManager.createNewFile(fileName);
             if (creatingResult == 1) {
                 Alerts.createdAlert(fileName);
                 UserInputPrompt.getStage().close();
-            } else if(creatingResult == 0){
+            } else if (creatingResult == 0) {
                 Alerts.sameNameExistsAlert();
-            } else if(creatingResult == -1){
+            } else if (creatingResult == -1) {
                 Alerts.accessDeniedAlert();
                 UserInputPrompt.getStage().close();
             }
@@ -93,7 +96,7 @@ public class CreateFilePromptController {
 
     //close prompt dialog when ESCAPE pressed anywhere
     public void closePromptDialog(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.ESCAPE)
+        if (keyEvent.getCode() == KeyCode.ESCAPE)
             UserInputPrompt.getStage().close();
     }
 }

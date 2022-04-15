@@ -46,9 +46,9 @@ public class IOManager {
     //check if such address exists, if yes then set the value to addressPath
     public static boolean setPath(String path) throws IOException {
         Path address = Paths.get(path);
-        if(address.toString().length() < 3)
+        if (address.toString().length() < 3)
             return false;
-        if(Files.exists(address)) {
+        if (Files.exists(address)) {
             addressPath = Paths.get(address.toString());
             return true;
         }
@@ -64,33 +64,32 @@ public class IOManager {
     //if the address is a directory, then just return true (the address will be used to show dirs and files there)
     public static boolean setPathOrOpen(String path) throws IOException {
         Path address = Paths.get(path);
-        if(address.toString().length() < 3)
+        if (address.toString().length() < 3)
             return false;
-        if(Files.exists(address)) {
+        if (Files.exists(address)) {
             addressPath = Paths.get(address.toString());
             if (!Files.isDirectory(addressPath)) {
                 Desktop desktop = Desktop.getDesktop();
                 desktop.open(addressPath.toFile());
                 moveBackPath();
                 return true;
-            }
-            else if(Files.isDirectory(addressPath))
+            } else if (Files.isDirectory(addressPath))
                 return true;
         }
         return false;
     }
 
     //getter of addressPath static var
-    public static Path getAddressPath(){
+    public static Path getAddressPath() {
         return addressPath;
     }
 
     //returns extension of file or returns empty String for directories saved in addressPath
     //checks if the fileName contains dot if yes then finds last appearance and cuts whole file name from there
     //if does not contain a dot then returns empty String
-    public static String getExtension(){
+    public static String getExtension() {
         Path fileName = addressPath.getFileName();
-        if(fileName.toString().contains(".")){
+        if (fileName.toString().contains(".")) {
             int dotIndex = fileName.toString().lastIndexOf(".");
             return fileName.toString().substring(dotIndex);
         }
@@ -100,9 +99,9 @@ public class IOManager {
     //returns extension of file or returns empty String for directories sent by method argument
     //checks if the fileName contains dot if yes then finds last appearance and cuts whole file name from there
     //if does not contain a dot then returns empty String
-    public static String getExtension(Path path){
+    public static String getExtension(Path path) {
         path = path.getFileName();
-        if(path.toString().contains(".")){
+        if (path.toString().contains(".")) {
             int dotIndex = path.toString().lastIndexOf(".");
             return path.toString().substring(dotIndex);
         }
@@ -110,9 +109,9 @@ public class IOManager {
     }
 
     //Cuts file extension (if present) and returns pure file name
-    public static String getFileNameOnly(){
+    public static String getFileNameOnly() {
         Path fileName = addressPath.getFileName();
-        if(fileName.toString().contains(".")){
+        if (fileName.toString().contains(".")) {
             int dotIntex = fileName.toString().lastIndexOf(".");
             return fileName.toString().substring(0, dotIntex);
         }
@@ -122,7 +121,7 @@ public class IOManager {
     //go to the upper address if possible
     //if the address field has less than 3 chars or is a root (C:\) then return false
     public static boolean moveBackPath() throws IOException {
-        if(!(addressPath.toString().length() <= 3)) {
+        if (!(addressPath.toString().length() <= 3)) {
             setPathOrOpen(addressPath.getParent().toString());
             return true;
         }
@@ -136,12 +135,15 @@ public class IOManager {
     //returns: 1 - correctly edited | 0 - name already exists | -1 - access denied
     public static int createNewFile(String fileName) throws IOException {
         addressPath = Paths.get(addressPath.toString() + "\\" + fileName);
-        if(!Files.exists(addressPath)) {
+        if (!Files.exists(addressPath)) {
             try {
                 Files.createFile(addressPath);
                 return 1;
-            } catch (AccessDeniedException ade){ return -1;
-            } finally { moveBackPath(); }
+            } catch (AccessDeniedException ade) {
+                return -1;
+            } finally {
+                moveBackPath();
+            }
         }
         moveBackPath();
         return 0;
@@ -158,8 +160,11 @@ public class IOManager {
             try {
                 Files.createDirectory(addressPath);
                 return 1;
-            } catch (AccessDeniedException ade){ return -1; }
-            finally { moveBackPath(); }
+            } catch (AccessDeniedException ade) {
+                return -1;
+            } finally {
+                moveBackPath();
+            }
         }
         moveBackPath();
         return 0;
@@ -174,12 +179,15 @@ public class IOManager {
     //returns: 1 - correctly edited | 0 - name already exists | -1 - access denied
     public static int editName(String newName) throws IOException {
         String newNamePath = addressPath.getParent() + "\\" + newName + getExtension();
-        if(!Files.exists(Paths.get(newNamePath))) {
+        if (!Files.exists(Paths.get(newNamePath))) {
             try {
                 Files.move(addressPath, addressPath.resolveSibling(newNamePath));
                 return 1;
-            } catch (AccessDeniedException ade){ return -1; }
-            finally { moveBackPath(); }
+            } catch (AccessDeniedException ade) {
+                return -1;
+            } finally {
+                moveBackPath();
+            }
         }
         moveBackPath();
         return 0;
@@ -198,8 +206,9 @@ public class IOManager {
             if (ex instanceof AccessDeniedException)
                 return -1;
             else return -2;
+        } finally {
+            moveBackPath();
         }
-        finally { moveBackPath(); }
 
     }
 
@@ -211,8 +220,8 @@ public class IOManager {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher(regexToFind);
         ObservableList<Path> foundPathsList = FXCollections.observableList(new ArrayList<>());
 
-        for(Path item : getPathList()){
-            if(matcher.matches(item))
+        for (Path item : getPathList()) {
+            if (matcher.matches(item))
                 foundPathsList.add(item);
         }
         return foundPathsList;
