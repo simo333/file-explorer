@@ -1,6 +1,6 @@
 # File Explorer
 
-Dekstop application that works with files and directories. It is a meager version of Windows Explorer.
+Desktop application that works with files and directories. It is a meager version of Windows Explorer.
 
 Implemented in Java and JavaFX.
 
