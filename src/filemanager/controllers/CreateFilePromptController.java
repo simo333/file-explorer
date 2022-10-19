@@ -41,7 +41,7 @@ public class CreateFilePromptController {
         listOfTypes.put("Document file of MS Word", ".docx");
         listOfTypes.put("MS Excel Document", ".xlsx");
         listOfTypes.put("PowerPoint presentation", ".pptx");
-        listOfTypes.put("Formated Document RTF", ".rtf");
+        listOfTypes.put("Formatted Document RTF", ".rtf");
         listOfTypes.put("BMP Picture", ".bmp");
 
         typeComboBox.setItems(getObservableKeyList());

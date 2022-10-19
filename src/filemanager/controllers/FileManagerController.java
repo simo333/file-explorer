@@ -46,23 +46,15 @@ public class FileManagerController {
     private TextField findTextField;
 
     //Paths to FXML resources
-    private final String createFilePromptPath = "/filemanager/resources/create-file-prompt.fxml";
-    private final String editNamePromptPath = "/filemanager/resources/edit-name-prompt.fxml";
-    private final String createFolderPromptPath = "/filemanager/resources/create-folder-prompt.fxml";
-    //long var for mouse clicking time count (to verify double click in listItemSelected() method
+    private static final String CREATE_FILE_PROMPT_PATH = "/filemanager/resources/create-file-prompt.fxml";
+    private static final String EDIT_NAME_PROMPT_PATH = "/filemanager/resources/edit-name-prompt.fxml";
+    private static final String CREATE_DIR_PROMPT_PATH = "/filemanager/resources/create-folder-prompt.fxml";
     private long lastTimeClicked = 0;
 
-//  ExecutorService service = Executors.newFixedThreadPool(5);
 
     //Fill ListView with folders and files in C:\
     public void initialize() throws IOException {
         refreshPathsFoundList();
-//        service.submit(new WatchServiceTask(this));
-
-//        watchServiceManager = new WatchServiceManager(this, Thread.currentThread());
-//        Thread thread = new Thread(watchServiceManager);
-//        thread.setDaemon(true);
-//        Platform.runLater(watchServiceManager);
     }
 
 
@@ -133,7 +125,7 @@ public class FileManagerController {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             long diffClicksTime = 0;
             long currentTime = System.currentTimeMillis();
-            if (!(pathsFoundList.getSelectionModel().getSelectedItem() == null)) {
+            if (pathsFoundList.getSelectionModel().getSelectedItem() != null) {
                 pathAddress.setText(IOManager.getAddressPath().toString() + "\\");
                 pathAddress.setText(pathAddress.getText() + pathsFoundList.getSelectionModel().getSelectedItem());
                 if (lastTimeClicked != 0 && currentTime != 0) {
@@ -169,7 +161,7 @@ public class FileManagerController {
     //Creates a new files and refreshes ListView
     public void createFile(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-            new UserInputPrompt(createFilePromptPath, "Create a file");
+            new UserInputPrompt(CREATE_FILE_PROMPT_PATH, "Create a file");
             UserInputPrompt.getStage().showAndWait();
             pathsFoundList.setItems(IOManager.getObservablePathList());
         }
@@ -184,7 +176,7 @@ public class FileManagerController {
         if (!pathsFoundList.getSelectionModel().isEmpty()) {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 IOManager.setPath(pathAddress.getText());
-                new UserInputPrompt(editNamePromptPath, "Edit name");
+                new UserInputPrompt(EDIT_NAME_PROMPT_PATH, "Edit name");
                 UserInputPrompt.getStage().showAndWait();
                 pathAddress.setText(IOManager.getAddressPath().toString());
                 pathsFoundList.setItems(IOManager.getObservablePathList());
@@ -199,7 +191,7 @@ public class FileManagerController {
     public void createFolder(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             IOManager.setPath(pathAddress.getText());
-            new UserInputPrompt(createFolderPromptPath, "Create a folder");
+            new UserInputPrompt(CREATE_DIR_PROMPT_PATH, "Create a folder");
             UserInputPrompt.getStage().showAndWait();
             pathAddress.setText(IOManager.getAddressPath().toString());
             pathsFoundList.setItems(IOManager.getObservablePathList());

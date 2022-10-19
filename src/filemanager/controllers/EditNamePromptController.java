@@ -79,47 +79,6 @@ public class EditNamePromptController {
         }
     }
 
-
-    //    //renames filename or folder name
-//    //TODO DESCRIPTION
-//    private void editName() throws IOException {
-//        String newName = fileNameField.getText();
-//        Path oldName = IOManager.getAddressPath().getFileName();
-//        if (FileNameValidator.validate(newName)) {
-//            int editingResult = IOManager.editName(newName);
-//            if (editingResult == 1) {
-//                Alert alertFileCreated = new Alert(Alert.AlertType.INFORMATION);
-//                alertFileCreated.setTitle("Successfully changed!");
-//                alertFileCreated.setHeaderText("\"" + oldName + "\"" + " has been changed to " +
-//                        "\"" + newName + IOManager.getExtension() + "\".");
-//                alertFileCreated.showAndWait();
-//                if (alertFileCreated.getResult() == ButtonType.OK)
-//                    alertFileCreated.close();
-//                UserInputPrompt.getStage().close();
-//            } else if(editingResult == 0) {
-//                    Alert alertFileNotCreated = new Alert(Alert.AlertType.ERROR);
-//                    alertFileNotCreated.setTitle("Error");
-//                    alertFileNotCreated.setHeaderText("Cannot create such a file!");
-//                    alertFileNotCreated.setContentText("Check if a file with this name does already exists.");
-//                    alertFileNotCreated.showAndWait();
-//                if (alertFileNotCreated.getResult() == ButtonType.OK)
-//                    alertFileNotCreated.close();
-//            } else if(editingResult == -1){
-//                accessDeniedAlert();
-//                UserInputPrompt.getStage().close();
-//            }
-//
-//        } else {
-//            Alert alertInvalidFileName = new Alert(Alert.AlertType.ERROR);
-//            alertInvalidFileName.setTitle("Error");
-//            alertInvalidFileName.setHeaderText("Invalid file name!");
-//            alertInvalidFileName.setContentText("Your file name can have max 100 characters" +
-//                    " and cannot contain these characters: < > / \\ * ? \" : |");
-//            alertInvalidFileName.showAndWait();
-//            if (alertInvalidFileName.getResult() == ButtonType.OK)
-//                alertInvalidFileName.close();
-//        }
-//    }
     //renames filename or folder name
     //TODO DESCRIPTION
     //TODO CHECK EDITING
@@ -129,7 +88,6 @@ public class EditNamePromptController {
         if (FileNameValidator.validate(newName)) {
             int editingResult = IOManager.editName(newName);
             if (editingResult == 1) {
-                System.out.println("newName: " + newName + IOManager.getExtension());
                 Alerts.editedAlert(oldName.toString(), (newName + IOManager.getExtension(oldName)));
                 UserInputPrompt.getStage().close();
             } else if (editingResult == 0) {
@@ -143,17 +101,6 @@ public class EditNamePromptController {
             Alerts.invalidNameAlert();
         }
     }
-
-//    //shows alert if AccessDeniedException occurs
-//    private static void accessDeniedAlert(){
-//        Alert accessDenied = new Alert(Alert.AlertType.ERROR);
-//        accessDenied.setTitle("Error");
-//        accessDenied.setHeaderText("You are not allowed to do this here.");
-//        accessDenied.setContentText("Please change the directory.");
-//        accessDenied.showAndWait();
-//        if (accessDenied.getResult() == ButtonType.OK)
-//            accessDenied.close();
-//    }
 
     public void onXClicked() throws IOException {
         IOManager.moveBackPath();

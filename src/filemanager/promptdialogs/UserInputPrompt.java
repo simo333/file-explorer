@@ -8,25 +8,25 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class UserInputPrompt {
-    private static Stage stage = new Stage(StageStyle.UTILITY);
-    private static Parent parent;
+    private static final Stage STAGE = new Stage(StageStyle.UTILITY);
 
 
-    //Constructor -> create a new prompt dialog that will enable user to type a new file name
-    //Modality.APPLICATION_MODAL -> makes prompt dialog being the only clickable window
+    //Constructor -> create a new prompt dialog that will enable user to enter new file name
+    //Modality.APPLICATION_MODAL -> makes prompt dialog the only clickable area
     public UserInputPrompt(String pathToFxml, String stageTitle) throws IOException {
-        parent = FXMLLoader.load(getClass().getResource(pathToFxml));
-        stage.setScene(new Scene(parent));
-        stage.setTitle(stageTitle);
-        stage.setResizable(false);
-        if (!(stage.getModality() == Modality.APPLICATION_MODAL))
-            stage.initModality(Modality.APPLICATION_MODAL);
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(pathToFxml)));
+        STAGE.setScene(new Scene(parent));
+        STAGE.setTitle(stageTitle);
+        STAGE.setResizable(false);
+        if (STAGE.getModality() != Modality.APPLICATION_MODAL)
+            STAGE.initModality(Modality.APPLICATION_MODAL);
     }
 
     public static Stage getStage() {
-        return stage;
+        return STAGE;
     }
 
 }
